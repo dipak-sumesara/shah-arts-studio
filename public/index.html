@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shah Art Studio &amp; Academy — Preserve Precious Moments Forever</title>
+<meta name="description" content="Shah Art Studio &amp; Academy — Hand Casting, Resin Art, Glass Painting & Customized Home Decor. Preserve Precious Moments Forever." />
+<meta name="theme-color" content="#FFF8F0" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          cream: '#FFF8F0',
+          gold: '#D4AF37',
+          golddark: '#B8932B',
+          charcoal: '#2D2D2D',
+          warmgray: '#6B6B6B',
+          disabled: '#E5E5E5',
+        },
+        fontFamily: {
+          serif: ['"Playfair Display"', 'serif'],
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+        },
+        boxShadow: {
+          soft: '0 8px 30px rgba(45,45,45,0.08)',
+          softer: '0 4px 16px rgba(45,45,45,0.06)',
+        },
+        borderRadius: {
+          '2xl': '1rem',
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html, body { background: #FFF8F0; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #2D2D2D; }
+  h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
+
+  /* Page transitions */
+  .page { display: none; animation: fadeIn 300ms ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Modal / overlay fades */
+  .overlay { opacity: 0; visibility: hidden; transition: opacity 300ms ease, visibility 300ms ease; }
+  .overlay.show { opacity: 1; visibility: visible; }
+
+  .sidebar { transform: translateX(-100%); transition: transform 300ms ease; }
+  .sidebar.show { transform: translateX(0); }
+
+  /* Loading spinner */
+  .spinner { width: 40px; height: 40px; border-radius: 50%; border: 4px solid rgba(193,154,107,0.25); border-top-color: #C19A6B; animation: spin 800ms linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Hide scrollbar for carousel */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Placeholder art gradients */
+  .art-1 { background: linear-gradient(135deg,#F3E3C3,#D4AF37); }
+  .art-2 { background: linear-gradient(135deg,#FBE9E7,#E8B4A0); }
+  .art-3 { background: linear-gradient(135deg,#E8F0E3,#A9C9A4); }
+  .art-4 { background: linear-gradient(135deg,#FFF1D6,#D4AF37); }
+  .art-5 { background: linear-gradient(135deg,#EDE7F6,#B9A7D6); }
+  .art-6 { background: linear-gradient(135deg,#FDEBD0,#E0A458); }
+
+  .hover-lift { transition: transform 250ms ease, box-shadow 250ms ease; }
+  .hover-lift:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(45,45,45,0.12); }
+</style>
+</head>
+<body class="bg-cream text-charcoal min-h-screen">
+
+<!-- ============== STICKY TOP BAR ============== -->
+<header class="sticky top-0 z-40 bg-cream/90 backdrop-blur border-b border-disabled">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <button onclick="openSidebar()" aria-label="Open menu" class="p-2 -ml-2 rounded-lg hover:bg-gold/10 transition">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <button onclick="go('home')" class="text-center leading-tight">
+      <div class="font-serif text-lg sm:text-xl font-bold text-charcoal">Shah Art Studio</div>
+      <div class="text-[10px] tracking-[0.25em] text-gold uppercase">&amp; Academy</div>
+    </button>
+    <button onclick="openSearch()" aria-label="Search" class="p-2 -mr-2 rounded-lg hover:bg-gold/10 transition">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============== SIDEBAR + OVERLAY ============== -->
+<div id="sidebarOverlay" class="overlay fixed inset-0 z-50 bg-black/40" onclick="closeSidebar()"></div>
+<aside id="sidebar" class="sidebar fixed top-0 left-0 z-[60] h-full w-72 max-w-[80%] bg-cream shadow-soft">
+  <div class="p-5 border-b border-disabled flex items-center justify-between">
+    <div>
+      <div class="font-serif text-lg font-bold">Menu</div>
+      <div class="text-xs text-warmgray">Explore our studio</div>
+    </div>
+    <button onclick="closeSidebar()" aria-label="Close menu" class="p-2 rounded-lg hover:bg-gold/10">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="p-3 flex flex-col gap-1">
+    <button onclick="closeSidebar(); openSearch()" class="sidebar-link">Search</button>
+    <button onclick="closeSidebar(); go('handcasting')" class="sidebar-link">Appointment Booking</button>
+    <button onclick="closeSidebar(); go('availability')" class="sidebar-link">Service Availability in Cities</button>
+    <button onclick="closeSidebar(); go('home'); setTimeout(()=>scrollToFooter(),350)" class="sidebar-link">Contact Us</button>
+    <button onclick="closeSidebar(); go('courses')" class="sidebar-link">Courses / Workshop</button>
+  </nav>
+  <div class="mt-auto p-5 text-xs text-warmgray absolute bottom-0">
+    <div class="font-semibold text-charcoal">Call us</div>
+    +91 99983 40499
+  </div>
+</aside>
+
+<!-- ============== MAIN ============== -->
+<main>
+
+  <!-- ===================== PAGE 1: HOME ===================== -->
+  <section id="page-home" class="page active">
+    <!-- Hero -->
+    <div class="px-4 py-16 sm:py-24 text-center" style="background:linear-gradient(160deg,#FFF8F0 0%,#FBEFD6 55%,#F3E3C3 100%);">
+      <div class="max-w-3xl mx-auto">
+        <span class="inline-block text-xs tracking-[0.3em] uppercase text-gold font-semibold mb-4">Shah Art Studio &amp; Academy</span>
+        <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-balance">Preserve Precious Moments Forever</h1>
+        <p class="mt-5 text-warmgray text-base sm:text-lg">Hand Casting • Resin Art • Glass Painting • Customized Home Decor</p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <button onclick="go('handcasting')" class="px-7 py-3.5 rounded-xl bg-gold text-white font-semibold shadow-soft hover:bg-golddark transition">Book Appointment</button>
+          <button onclick="toast('Coming Soon — online ordering in progress')" class="px-7 py-3.5 rounded-xl border-2 border-gold text-gold font-semibold hover:bg-gold hover:text-white transition">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Arrivals -->
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <div class="flex items-end justify-between mb-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+            <span class="text-xs uppercase tracking-widest text-red-500 font-semibold">Live Feed</span>
+          </div>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold mt-1">Latest Designs &amp; New Arrivals</h2>
+          <p class="text-warmgray text-sm">Fresh creations added every week</p>
+        </div>
+        <button onclick="toast('View All Designs — coming soon')" class="hidden sm:inline-block text-sm font-semibold text-gold hover:text-golddark whitespace-nowrap">View All Designs →</button>
+      </div>
+      <div id="newArrivals" class="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-1 px-1"></div>
+      <div class="text-center mt-4 sm:hidden">
+        <button onclick="toast('View All Designs — coming soon')" class="text-sm font-semibold text-gold">View All Designs →</button>
+      </div>
+    </div>
+
+    <!-- Category Grid -->
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="font-serif text-2xl sm:text-3xl font-bold text-center mb-2">Explore Our Categories</h2>
+      <p class="text-warmgray text-center text-sm mb-8">Handcrafted with love, made to last a lifetime</p>
+      <div id="categoryGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"></div>
+    </div>
+
+    <!-- Footer / Contact -->
+    <footer id="footer" class="bg-charcoal text-cream mt-12">
+      <div class="max-w-6xl mx-auto px-4 py-12 grid sm:grid-cols-3 gap-8">
+        <div>
+          <div class="font-serif text-xl font-bold">Shah Art Studio &amp; Academy</div>
+          <p class="text-cream/60 text-sm mt-2">Preserve Precious Moments Forever</p>
+        </div>
+        <div class="text-sm space-y-2">
+          <div class="font-semibold text-gold uppercase tracking-wider text-xs">Contact</div>
+          <p class="text-cream/80">📍 [Placeholder Address], Ahmedabad, Gujarat</p>
+          <p class="text-cream/80">📞 +91 99983 40499</p>
+          <p class="text-cream/80">✉️ [Placeholder Email]</p>
+        </div>
+        <div class="text-sm space-y-2">
+          <div class="font-semibold text-gold uppercase tracking-wider text-xs">Quick Links</div>
+          <button onclick="go('handcasting')" class="block text-cream/80 hover:text-gold">Book Appointment</button>
+          <button onclick="go('courses')" class="block text-cream/80 hover:text-gold">Courses / Workshop</button>
+          <button onclick="go('availability')" class="block text-cream/80 hover:text-gold">Service Cities</button>
+        </div>
+      </div>
+      <div class="border-t border-cream/10 py-4 text-center text-xs text-cream/50">© 2026 Shah Art Studio &amp; Academy. All rights reserved.</div>
+    </footer>
+  </section>
+
+  <!-- ===================== PAGE: HAND CASTING ===================== -->
+  <section id="page-handcasting" class="page">
+    <div class="max-w-5xl mx-auto px-4 py-10">
+      <button onclick="go('home')" class="text-sm text-warmgray hover:text-gold mb-4">← Back to Home</button>
+      <h1 class="font-serif text-3xl sm:text-4xl font-bold">3D Hand Casting</h1>
+      <p class="text-warmgray mt-2">Capture tiny hands &amp; feet in stunning lifelike detail.</p>
+
+      <!-- Sub-category tabs -->
+      <div class="flex flex-wrap gap-2 mt-6" id="hcTabs">
+        <button data-tab="classic" onclick="hcTab('classic')" class="hc-tab px-4 py-2 rounded-xl text-sm font-semibold">Classic Frames</button>
+        <button data-tab="premium" onclick="hcTab('premium')" class="hc-tab px-4 py-2 rounded-xl text-sm font-semibold">Premium Frames</button>
+        <button data-tab="custom" onclick="hcTab('custom')" class="hc-tab px-4 py-2 rounded-xl text-sm font-semibold">Customized Frames</button>
+      </div>
+      <div id="hcProducts" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6"></div>
+
+      <!-- Booking Section -->
+      <div class="mt-12 bg-white rounded-2xl shadow-soft p-5 sm:p-8">
+        <h2 class="font-serif text-2xl font-bold">Book Your Appointment</h2>
+        <p class="text-warmgray text-sm mt-1">Pick a date and an available time slot.</p>
+
+        <!-- Calendar -->
+        <div class="mt-6 max-w-md">
+          <div class="flex items-center justify-between mb-3">
+            <button onclick="changeMonth(-1)" class="p-2 rounded-lg hover:bg-gold/10">‹</button>
+            <div id="calLabel" class="font-semibold"></div>
+            <button onclick="changeMonth(1)" class="p-2 rounded-lg hover:bg-gold/10">›</button>
+          </div>
+          <div class="grid grid-cols-7 gap-1 text-center text-xs text-warmgray mb-1">
+            <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+          </div>
+          <div id="calGrid" class="grid grid-cols-7 gap-1"></div>
+        </div>
+
+        <!-- Time slots -->
+        <div class="mt-8">
+          <div class="text-sm font-semibold mb-3">Available Time Slots — <span id="slotDateLabel" class="text-gold"></span></div>
+          <div id="slots" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PAGE: RESIN ART ===================== -->
+  <section id="page-resin" class="page">
+    <div class="max-w-5xl mx-auto px-4 py-10">
+      <button onclick="go('home')" class="text-sm text-warmgray hover:text-gold mb-4">← Back to Home</button>
+      <h1 class="font-serif text-3xl sm:text-4xl font-bold">Resin Art</h1>
+      <p class="text-warmgray mt-2">Glossy, timeless keepsakes — customized your way.</p>
+      <div id="resinGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8"></div>
+    </div>
+  </section>
+
+  <!-- ===================== PAGE: GENERIC CATEGORY ===================== -->
+  <section id="page-generic" class="page">
+    <div class="max-w-5xl mx-auto px-4 py-10">
+      <button onclick="go('home')" class="text-sm text-warmgray hover:text-gold mb-4">← Back to Home</button>
+      <h1 id="genericTitle" class="font-serif text-3xl sm:text-4xl font-bold"></h1>
+      <p id="genericSub" class="text-warmgray mt-2"></p>
+      <div id="genericGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8"></div>
+    </div>
+  </section>
+
+  <!-- ===================== PAGE: COURSES ===================== -->
+  <section id="page-courses" class="page">
+    <div class="max-w-5xl mx-auto px-4 py-10">
+      <button onclick="go('home')" class="text-sm text-warmgray hover:text-gold mb-4">← Back to Home</button>
+      <h1 class="font-serif text-3xl sm:text-4xl font-bold">Courses &amp; Workshops</h1>
+      <p class="text-warmgray mt-2">Learn the craft from our experienced artists.</p>
+      <div id="coursesGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8"></div>
+    </div>
+  </section>
+
+  <!-- ===================== PAGE: AVAILABILITY ===================== -->
+  <section id="page-availability" class="page">
+    <div class="max-w-2xl mx-auto px-4 py-10">
+      <button onclick="go('home')" class="text-sm text-warmgray hover:text-gold mb-4">← Back to Home</button>
+      <h1 class="font-serif text-3xl sm:text-4xl font-bold">Service Availability</h1>
+      <p class="text-warmgray mt-2">Check where we deliver our services.</p>
+
+      <!-- Step 1 -->
+      <div class="mt-8">
+        <div class="text-sm font-semibold mb-3"><span class="text-gold">Step 1</span> · Select Country</div>
+        <div class="flex flex-wrap gap-3">
+          <button onclick="selCountry('India')" id="countryIndia" class="step-card">🇮🇳 India</button>
+          <button disabled class="step-card opacity-40 cursor-not-allowed">🇺🇸 USA</button>
+          <button disabled class="step-card opacity-40 cursor-not-allowed">🇬🇧 UK</button>
+          <button disabled class="step-card opacity-40 cursor-not-allowed">🇦🇪 UAE</button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="stepState" class="mt-8 hidden">
+        <div class="text-sm font-semibold mb-3"><span class="text-gold">Step 2</span> · Select State</div>
+        <div id="stateGrid" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- Step 3 -->
+      <div id="stepCity" class="mt-8 hidden">
+        <div class="text-sm font-semibold mb-3"><span class="text-gold">Step 3</span> · Select City</div>
+        <div id="cityGrid" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- Step 4 -->
+      <div id="stepConfirm" class="mt-8 hidden">
+        <div class="bg-white rounded-2xl shadow-soft p-6 text-center">
+          <div class="text-sm font-semibold mb-3"><span class="text-gold">Step 4</span> · Confirmation</div>
+          <div id="confirmPath" class="font-serif text-xl font-bold"></div>
+          <p class="text-warmgray text-sm mt-2">Great news! We are available in your city.</p>
+          <button onclick="go('handcasting')" class="mt-5 px-7 py-3 rounded-xl bg-gold text-white font-semibold hover:bg-golddark transition">Book Appointment Here</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============== FLOATING CALL BUTTON ============== -->
+<div class="fixed bottom-5 right-5 z-40">
+  <div id="callTip" class="overlay absolute bottom-16 right-0 bg-charcoal text-cream text-sm px-4 py-2 rounded-xl shadow-soft whitespace-nowrap">Call us: 99983 40499</div>
+  <button onclick="toggleCallTip()" aria-label="Call us" class="w-14 h-14 rounded-full bg-gold shadow-soft flex items-center justify-center hover:bg-golddark transition">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13 1.05.36 2.07.7 3.06a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.02-1.27a2 2 0 0 1 2.11-.45c.99.34 2.01.57 3.06.7A2 2 0 0 1 22 16.92z"/></svg>
+  </button>
+</div>
+
+<!-- ============== SEARCH OVERLAY ============== -->
+<div id="searchOverlay" class="overlay fixed inset-0 z-[70] bg-cream">
+  <div class="max-w-2xl mx-auto px-4 py-6">
+    <div class="flex items-center gap-3">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      <input id="searchInput" oninput="renderSearch()" type="text" placeholder="Search designs, categories, courses..." class="flex-1 bg-transparent outline-none text-lg py-3 border-b-2 border-gold" />
+      <button onclick="closeSearch()" aria-label="Close search" class="p-2 rounded-lg hover:bg-gold/10">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="mt-6">
+      <div class="text-xs uppercase tracking-widest text-warmgray font-semibold mb-2">Recent Searches</div>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="searchPick('Hand Casting')" class="chip">Hand Casting</button>
+        <button onclick="searchPick('Resin Clock')" class="chip">Resin Clock</button>
+        <button onclick="searchPick('Lipan Art')" class="chip">Lipan Art</button>
+        <button onclick="searchPick('Baby Products')" class="chip">Baby Products</button>
+      </div>
+    </div>
+    <div class="mt-8">
+      <div class="text-xs uppercase tracking-widest text-warmgray font-semibold mb-2">Popular Categories</div>
+      <div id="searchResults" class="flex flex-col gap-1"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== BOOKING MODAL ============== -->
+<div id="bookingModal" class="overlay fixed inset-0 z-[80] bg-black/50 flex items-center justify-center p-4" onclick="if(event.target===this)closeBooking()">
+  <div class="bg-white rounded-2xl max-w-md w-full p-8 relative max-h-[90vh] overflow-y-auto">
+    <button onclick="closeBooking()" aria-label="Close" class="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-disabled">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h3 class="font-serif text-2xl font-bold">Confirm Your Booking</h3>
+
+    <div class="bg-gold/15 border border-gold/30 rounded-lg p-4 mt-4 mb-6 text-sm">
+      <div class="font-semibold">📅 Date: <span id="modalDate" class="font-normal"></span></div>
+      <div class="font-semibold mt-1">⏰ Slot: <span id="modalSlot" class="font-normal"></span></div>
+    </div>
+
+    <form id="bookingForm" onsubmit="submitBooking(event)" class="space-y-4">
+      <div>
+        <label class="text-sm font-semibold">Parent's Name <span class="text-red-500">*</span></label>
+        <input id="bkName" required type="text" placeholder="Enter your full name" class="form-input" />
+      </div>
+      <div>
+        <label class="text-sm font-semibold">Mobile Number <span class="text-red-500">*</span></label>
+        <input id="bkMobile" required type="tel" maxlength="10" pattern="[0-9]{10}" placeholder="+91 98765 43210" class="form-input" />
+      </div>
+      <div>
+        <label class="text-sm font-semibold">Kid's Age <span class="text-red-500">*</span></label>
+        <input id="bkAge" required type="text" placeholder="e.g., 6 months" class="form-input" />
+      </div>
+      <div class="relative">
+        <label class="text-sm font-semibold">City <span class="text-red-500">*</span></label>
+        <input required id="cityInput" autocomplete="off" oninput="filterCities()" onfocus="filterCities()" type="text" placeholder="Type to search your city" class="form-input" />
+        <div id="cityDropdown" class="hidden absolute z-10 left-0 right-0 bg-white border border-disabled rounded-lg mt-1 shadow-soft max-h-44 overflow-y-auto"></div>
+      </div>
+      <div>
+        <label class="text-sm font-semibold">Full Address <span class="text-red-500">*</span></label>
+        <textarea id="bkAddress" required rows="3" placeholder="Enter your complete address with landmark" class="form-input"></textarea>
+      </div>
+      <p class="text-xs text-warmgray text-center">A refundable advance of ₹500 is required to confirm your booking.</p>
+      <button type="submit" class="w-full py-3.5 rounded-xl bg-gold text-white font-semibold hover:bg-golddark transition">Confirm Booking &amp; Pay ₹500</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============== CASHFREE SANDBOX CHECKOUT MODAL ============== -->
+<div id="payModal" class="overlay fixed inset-0 z-[85] bg-black/60 flex items-center justify-center p-4" onclick="if(event.target===this)closePay()">
+  <div class="bg-white rounded-2xl max-w-sm w-full overflow-hidden relative">
+    <!-- header -->
+    <div class="bg-[#0c1e4a] text-white px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#52c41a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <span class="font-bold tracking-wide">Cashfree</span>
+        <span class="text-[10px] bg-amber-400 text-[#0c1e4a] font-bold px-1.5 py-0.5 rounded">SANDBOX</span>
+      </div>
+      <button onclick="closePay()" aria-label="Close" class="p-1 rounded hover:bg-white/15">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <!-- body -->
+    <div class="p-6">
+      <!-- connecting state -->
+      <div id="payConnecting" class="text-center py-8">
+        <div class="spinner mx-auto"></div>
+        <p class="text-sm text-warmgray mt-4">Creating secure order&hellip;</p>
+      </div>
+      <!-- checkout state -->
+      <div id="payCheckout" class="hidden">
+        <div class="text-center">
+          <div class="text-xs text-warmgray">Amount Payable</div>
+          <div class="font-serif text-4xl font-bold text-charcoal mt-1">&#8377;500</div>
+          <div class="text-[11px] text-warmgray mt-1">Refundable booking advance</div>
+        </div>
+        <div class="bg-cream rounded-xl p-4 mt-5 text-xs space-y-1.5">
+          <div class="flex justify-between"><span class="text-warmgray">Order ID</span><span id="payOrderId" class="font-semibold font-mono"></span></div>
+          <div class="flex justify-between"><span class="text-warmgray">Session</span><span id="paySession" class="font-semibold font-mono"></span></div>
+          <div class="flex justify-between"><span class="text-warmgray">Customer</span><span id="payCust" class="font-semibold"></span></div>
+        </div>
+        <div class="mt-5 space-y-2">
+          <div class="text-xs font-semibold text-warmgray">Choose payment method (demo)</div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="border-2 border-gold rounded-lg py-2 text-center text-xs font-semibold text-gold">UPI</div>
+            <div class="border border-disabled rounded-lg py-2 text-center text-xs text-warmgray">Card</div>
+            <div class="border border-disabled rounded-lg py-2 text-center text-xs text-warmgray">NetBanking</div>
+          </div>
+        </div>
+        <button onclick="payNow()" class="mt-5 w-full py-3.5 rounded-xl bg-[#52c41a] text-white font-semibold hover:brightness-95 transition">Pay &#8377;500 Securely</button>
+        <p class="text-[10px] text-warmgray text-center mt-2">Sandbox mode &mdash; no real money is charged.</p>
+      </div>
+      <!-- processing state -->
+      <div id="payProcessing" class="hidden text-center py-8">
+        <div class="spinner mx-auto"></div>
+        <p class="text-sm text-warmgray mt-4">Processing payment&hellip;</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== WHATSAPP CONFIRMATION PREVIEW MODAL ============== -->
+<div id="waModal" class="overlay fixed inset-0 z-[85] bg-black/60 flex items-center justify-center p-4" onclick="if(event.target===this)closeWa()">
+  <div class="bg-white rounded-2xl max-w-md w-full p-6 relative max-h-[90vh] overflow-y-auto">
+    <button onclick="closeWa()" aria-label="Close" class="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-disabled">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="flex items-center gap-2 text-[#25D366]">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.06c-.25.7-1.44 1.33-1.99 1.41-.53.08-1.01.29-3.4-.71-2.85-1.18-4.65-4.13-4.79-4.32-.14-.19-1.15-1.53-1.15-2.92 0-1.39.73-2.07 1-2.36.25-.27.55-.34.73-.34.18 0 .37 0 .53.01.17.01.4-.06.62.48.25.6.85 2.07.92 2.22.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.93 1.94 1.22 2.22 1.36.28.14.44.12.6-.07.17-.19.69-.81.87-1.08.18-.27.37-.23.62-.14.25.09 1.6.75 1.87.89.28.14.46.21.53.32.07.12.07.66-.18 1.36z"/></svg>
+      <h3 class="font-serif text-xl font-bold text-charcoal">Payment Successful!</h3>
+    </div>
+    <p class="text-sm text-warmgray mt-1">Your advance is confirmed. Send the details to the studio on WhatsApp to lock your slot.</p>
+
+    <div class="bg-gold/10 border border-gold/30 rounded-lg p-3 mt-4 text-xs flex items-center gap-2">
+      <span class="font-semibold">Payment ID:</span><span id="waPayId" class="font-mono"></span>
+    </div>
+
+    <!-- chat preview -->
+    <div class="mt-4">
+      <div class="text-xs font-semibold text-warmgray mb-2">Message preview</div>
+      <div class="rounded-xl p-3" style="background:#e5ddd5;">
+        <div class="bg-[#dcf8c6] rounded-lg rounded-tr-none p-3 text-[13px] leading-relaxed text-charcoal whitespace-pre-line shadow-softer" id="waPreview"></div>
+      </div>
+    </div>
+
+    <button onclick="sendToStudio()" class="mt-5 w-full py-3.5 rounded-xl bg-[#25D366] text-white font-semibold hover:brightness-95 transition flex items-center justify-center gap-2">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2z"/></svg>
+      Send to Studio
+    </button>
+    <p class="text-[10px] text-warmgray text-center mt-2">Opens WhatsApp chat with +91 96621 84977</p>
+  </div>
+</div>
+
+<!-- ============== FINAL SUCCESS MODAL ============== -->
+<div id="successModal" class="overlay fixed inset-0 z-[85] bg-black/60 flex items-center justify-center p-4" onclick="if(event.target===this)closeSuccess()">
+  <div class="bg-white rounded-2xl max-w-sm w-full p-8 relative text-center">
+    <div class="w-16 h-16 rounded-full bg-[#52c41a]/15 flex items-center justify-center mx-auto">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#52c41a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <h3 class="font-serif text-2xl font-bold mt-5">Booking Confirmed!</h3>
+    <p class="text-sm text-warmgray mt-2">Thank you, <span id="successName" class="font-semibold text-charcoal"></span>. Your slot on <span id="successSlot" class="font-semibold text-charcoal"></span> is reserved. Our team will confirm shortly on WhatsApp.</p>
+    <div class="bg-cream rounded-xl p-4 mt-5 text-xs text-left space-y-1.5">
+      <div class="flex justify-between"><span class="text-warmgray">Booking ID</span><span id="successBookingId" class="font-semibold font-mono"></span></div>
+      <div class="flex justify-between"><span class="text-warmgray">Advance Paid</span><span class="font-semibold">&#8377;500</span></div>
+      <div class="flex justify-between"><span class="text-warmgray">Status</span><span class="font-semibold text-[#52c41a]">Confirmed</span></div>
+    </div>
+    <button onclick="closeSuccess()" class="mt-6 w-full py-3 rounded-xl bg-gold text-white font-semibold hover:bg-golddark transition">Done</button>
+  </div>
+</div>
+
+<!-- ============== CUSTOMIZE MODAL ============== -->
+<div id="customizeModal" class="overlay fixed inset-0 z-[80] bg-black/50 flex items-center justify-center p-4" onclick="if(event.target===this)closeCustomize()">
+  <div class="bg-white rounded-2xl max-w-md w-full p-8 relative">
+    <button onclick="closeCustomize()" aria-label="Close" class="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-disabled">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2D2D2D" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h3 id="custTitle" class="font-serif text-2xl font-bold">Customize</h3>
+    <p id="custSimpleText" class="text-warmgray text-sm mt-2 hidden">Contact us to customize this piece exactly how you imagine it.</p>
+
+    <!-- Resin options (shown only for resin) -->
+    <div id="custOptions" class="mt-5 space-y-4 hidden">
+      <div>
+        <div class="text-sm font-semibold mb-2">Size</div>
+        <div class="flex gap-2" data-group="size">
+          <button type="button" onclick="custPick(this)" class="opt-btn" data-val="Small">Small</button>
+          <button type="button" onclick="custPick(this)" class="opt-btn" data-val="Medium">Medium</button>
+          <button type="button" onclick="custPick(this)" class="opt-btn" data-val="Large">Large</button>
+        </div>
+      </div>
+      <div>
+        <div class="text-sm font-semibold mb-2">Width</div>
+        <div class="flex gap-2" data-group="width">
+          <button type="button" onclick="custPick(this)" class="opt-btn" data-val="Standard">Standard</button>
+          <button type="button" onclick="custPick(this)" class="opt-btn" data-val="Wide">Wide</button>
+        </div>
+      </div>
+      <div>
+        <div class="text-sm font-semibold mb-2">Additional Writing</div>
+        <div class="flex gap-2" data-group="writing">
+          <button type="button" onclick="custPick(this)" class="opt-btn" data-val="No">No</button>
+          <button type="button" onclick="custPick(this)" class="opt-btn" data-val="Yes">Yes</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-gold/15 border border-gold/30 rounded-lg p-4 mt-5 text-center">
+      <div class="text-xs text-warmgray uppercase tracking-wider">Estimated Range</div>
+      <div id="custRange" class="font-serif text-xl font-bold text-charcoal">₹999 – ₹4,999</div>
+    </div>
+    <a href="tel:+919998340499" class="mt-5 block text-center w-full py-3.5 rounded-xl bg-gold text-white font-semibold hover:bg-golddark transition">Call to Customize: 99983 40499</a>
+  </div>
+</div>
+
+<!-- ============== TOAST ============== -->
+<div id="toast" class="overlay fixed bottom-24 left-1/2 -translate-x-1/2 z-[90] bg-charcoal text-cream text-sm px-5 py-3 rounded-xl shadow-soft"></div>
+
+<style>
+  .sidebar-link { text-align:left; padding:0.75rem 1rem; border-radius:0.75rem; font-weight:600; font-size:0.95rem; color:#2D2D2D; transition:background 200ms; }
+  .sidebar-link:hover { background:rgba(212,175,55,0.12); color:#B8932B; }
+  .chip { padding:0.4rem 0.9rem; border-radius:9999px; background:#fff; border:1px solid #E5E5E5; font-size:0.85rem; }
+  .chip:hover { border-color:#D4AF37; color:#B8932B; }
+  .form-input { width:100%; margin-top:0.35rem; padding:0.65rem 0.85rem; border:1px solid #E5E5E5; border-radius:0.75rem; outline:none; font-size:0.95rem; }
+  .form-input:focus { border-color:#D4AF37; box-shadow:0 0 0 3px rgba(212,175,55,0.15); }
+  .step-card { padding:0.6rem 1.1rem; border-radius:0.75rem; background:#fff; border:1px solid #E5E5E5; font-weight:600; font-size:0.9rem; }
+  .step-card:hover:not(:disabled) { border-color:#D4AF37; }
+  .step-card.sel { background:#D4AF37; color:#fff; border-color:#D4AF37; }
+  .opt-btn { flex:1; padding:0.5rem; border-radius:0.6rem; background:#fff; border:1px solid #E5E5E5; font-size:0.85rem; font-weight:600; }
+  .opt-btn.sel { background:#D4AF37; color:#fff; border-color:#D4AF37; }
+  .hc-tab { background:#fff; border:1px solid #E5E5E5; color:#6B6B6B; }
+  .hc-tab.sel { background:#D4AF37; color:#fff; border-color:#D4AF37; }
+</style>
+
+<script>
+/* ============== DATA ============== */
+const IMG = {
+  handcast: ['/images/handcast-1.png','/images/handcast-2.png','/images/handcast-3.png','/images/handcast-4.png'],
+  resin: ['/images/resin-clock.png','/images/resin-tray.png','/images/resin-frame.png'],
+  glass: '/images/glass-painting.png',
+  lipan: '/images/lipan.png',
+  baby: '/images/baby-keepsake.png',
+  mandala: '/images/mandala.png',
+  texture: '/images/texture-art.png',
+  sketching: '/images/sketching.png',
+};
+// generic category image pools (rotated across the sample designs)
+const genericImgs = {
+  'Glass Painting / Canvas': ['/images/glass-painting.png','/images/mandala.png','/images/texture-art.png'],
+  'Lipan Art / Texture Art': ['/images/lipan.png','/images/texture-art.png','/images/mandala.png'],
+  'Baby Products': ['/images/baby-keepsake.png','/images/handcast-3.png','/images/resin-frame.png'],
+  'Customized Home Decor': ['/images/mandala.png','/images/texture-art.png','/images/resin-tray.png','/images/lipan.png'],
+};
+
+const newArrivals = [
+  {n:'Golden Footprint Frame', c:'Hand Casting', img:'/images/handcast-3.png'},
+  {n:'Ocean Resin Clock', c:'Resin Art', img:'/images/resin-clock.png'},
+  {n:'Peacock Lipan Panel', c:'Lipan Art', img:'/images/lipan.png'},
+  {n:'Floral Glass Canvas', c:'Glass Painting', img:'/images/glass-painting.png'},
+  {n:'Newborn Keepsake', c:'Baby Products', img:'/images/baby-keepsake.png'},
+  {n:'Mandala Wall Decor', c:'Home Decor', img:'/images/mandala.png'},
+  {n:'Marble Resin Tray', c:'Resin Art', img:'/images/resin-tray.png'},
+];
+
+const categories = [
+  {n:'Hand Casting', d:'3D casts of tiny hands & feet', r:'Starting from ₹1,500', img:'/images/handcast-1.png', go:'handcasting'},
+  {n:'Resin Art', d:'Glossy keepsakes & decor', r:'₹999 – ₹4,999', img:'/images/resin-clock.png', go:'resin'},
+  {n:'Glass Painting / Canvas', d:'Hand-painted glass & canvas', r:'₹799 – ₹3,499', img:'/images/glass-painting.png', go:'generic:Glass Painting / Canvas:Hand-painted glass & canvas pieces:₹799 – ₹3,499'},
+  {n:'Lipan Art / Texture Art', d:'Traditional mud-mirror work', r:'₹1,299 – ₹5,999', img:'/images/lipan.png', go:'generic:Lipan Art / Texture Art:Traditional mud & mirror texture work:₹1,299 – ₹5,999'},
+  {n:'Baby Products', d:'Memorable newborn keepsakes', r:'₹499 – ₹2,999', img:'/images/baby-keepsake.png', go:'generic:Baby Products:Adorable keepsakes for your little one:₹499 – ₹2,999'},
+  {n:'Customized Home Decor', d:'Bespoke pieces for your home', r:'₹1,999 – ₹8,999', img:'/images/mandala.png', go:'generic:Customized Home Decor:Bespoke decor designed around you:₹1,999 – ₹8,999'},
+];
+
+const hcData = {
+  classic: {r:'Starting from ₹1,500', items:['Single Hand Cast','Couple Hands','Baby Foot Cast','Family Set'], imgs:IMG.handcast},
+  premium: {r:'₹2,499 – ₹4,999', items:['Premium Wood Frame','LED Shadow Box','Metallic Finish','Dual Tone Cast'], imgs:[IMG.handcast[3],IMG.handcast[0],IMG.handcast[1],IMG.handcast[2]]},
+  custom:  {r:'₹3,999 – ₹8,999+', items:['Full Family Portrait Cast','Custom Engraving','Themed Display','Heirloom Edition'], imgs:[IMG.handcast[3],IMG.handcast[2],IMG.handcast[1],IMG.handcast[0]]},
+};
+
+const resinItems = [
+  {n:'Photo Frame', img:'/images/resin-frame.png'},
+  {n:'Clock', img:'/images/resin-clock.png'},
+  {n:'Name Plaque', img:'/images/resin-tray.png'},
+  {n:'Wall Piece', img:'/images/mandala.png'},
+  {n:'Table Top', img:'/images/resin-tray.png'},
+  {n:'Varnish Preserving', img:'/images/resin-frame.png'},
+];
+
+const courses = [
+  {n:'Lipan Art', dur:'2 Days', r:'₹1,500 – ₹2,500', img:'/images/lipan.png'},
+  {n:'Hand Casting', dur:'1 Day', r:'₹2,000 – ₹3,500', img:'/images/handcast-1.png'},
+  {n:'Texture Art', dur:'2 Days', r:'₹1,800 – ₹3,000', img:'/images/texture-art.png'},
+  {n:'Dot Mandala', dur:'1 Day', r:'₹1,200 – ₹2,000', img:'/images/mandala.png'},
+  {n:'Sketching', dur:'4 Weeks', r:'₹3,000 – ₹5,000', img:'/images/sketching.png'},
+  {n:'Baby Drawing Classes', dur:'8 Weeks', r:'₹4,000 – ₹6,000', img:'/images/baby-keepsake.png'},
+];
+
+const statesData = {
+  Gujarat:['Ahmedabad','Surat','Vadodara','Rajkot'],
+  Maharashtra:['Mumbai','Pune','Nagpur'],
+  Rajasthan:['Jaipur','Udaipur','Jodhpur'],
+  Delhi:['Delhi'],
+  Karnataka:['Bangalore','Mysore'],
+  'Madhya Pradesh':['Indore','Bhopal'],
+  'Tamil Nadu':['Chennai','Coimbatore'],
+  Telangana:['Hyderabad'],
+  'West Bengal':['Kolkata'],
+  'Uttar Pradesh':['Lucknow','Kanpur'],
+  Punjab:['Chandigarh','Ludhiana'],
+};
+
+const modalCities = ['Ahmedabad','Surat','Vadodara','Rajkot','Mumbai','Pune','Delhi','Bangalore','Jaipur','Indore','Chennai','Hyderabad','Kolkata','Lucknow','Chandigarh'];
+
+const searchCats = [
+  {n:'Hand Casting', go:()=>go('handcasting')},
+  {n:'Resin Art', go:()=>go('resin')},
+  {n:'Glass Painting / Canvas', go:()=>goGeneric('Glass Painting / Canvas','Hand-painted glass & canvas pieces','₹799 – ₹3,499')},
+  {n:'Lipan Art / Texture Art', go:()=>goGeneric('Lipan Art / Texture Art','Traditional mud & mirror texture work','₹1,299 – ₹5,999')},
+  {n:'Baby Products', go:()=>goGeneric('Baby Products','Adorable keepsakes for your little one','₹499 – ₹2,999')},
+  {n:'Customized Home Decor', go:()=>goGeneric('Customized Home Decor','Bespoke decor designed around you','₹1,999 – ₹8,999')},
+  {n:'Courses / Workshop', go:()=>go('courses')},
+];
+
+/* ============== NAVIGATION ============== */
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el = document.getElementById('page-'+page);
+  if(el) el.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  closeSearch();
+  if(page==='handcasting'){ hcTab('classic'); renderCalendar(); }
+}
+function goGeneric(title,sub,range){
+  genericRange = range;
+  document.getElementById('genericTitle').textContent = title;
+  document.getElementById('genericSub').textContent = sub;
+  const grid = document.getElementById('genericGrid');
+  const names = ['Design A','Design B','Design C','Design D','Design E','Design F'];
+  const pool = genericImgs[title] || ['/images/texture-art.png'];
+  grid.innerHTML = names.map((nm,i)=>productCard(nm, range, pool[i%pool.length], `openCustomize('${title}','simple','${range}')`)).join('');
+  go('generic');
+}
+
+/* ============== SIDEBAR ============== */
+function openSidebar(){ document.getElementById('sidebar').classList.add('show'); document.getElementById('sidebarOverlay').classList.add('show'); }
+function closeSidebar(){ document.getElementById('sidebar').classList.remove('show'); document.getElementById('sidebarOverlay').classList.remove('show'); }
+function scrollToFooter(){ document.getElementById('footer')?.scrollIntoView({behavior:'smooth'}); }
+
+/* ============== SEARCH ============== */
+function openSearch(){ document.getElementById('searchOverlay').classList.add('show'); renderSearch(); setTimeout(()=>document.getElementById('searchInput').focus(),100); }
+function closeSearch(){ document.getElementById('searchOverlay').classList.remove('show'); }
+function renderSearch(){
+  const q = (document.getElementById('searchInput').value||'').toLowerCase();
+  const list = searchCats.filter(c=>c.n.toLowerCase().includes(q));
+  const box = document.getElementById('searchResults');
+  box.innerHTML = list.length ? list.map((c,i)=>`<button onclick="searchCats[${searchCats.indexOf(c)}].go()" class="text-left px-4 py-3 rounded-xl hover:bg-gold/10 font-medium flex items-center justify-between"><span>${c.n}</span><span class="text-gold">→</span></button>`).join('') : '<div class="px-4 py-3 text-warmgray text-sm">No results found</div>';
+}
+function searchPick(t){ document.getElementById('searchInput').value=t; renderSearch(); }
+
+/* ============== CALL TIP ============== */
+let callTipOpen=false;
+function toggleCallTip(){ callTipOpen=!callTipOpen; document.getElementById('callTip').classList.toggle('show',callTipOpen); if(callTipOpen) setTimeout(()=>{document.getElementById('callTip').classList.remove('show');callTipOpen=false;},3000); }
+
+/* ============== TOAST ============== */
+let toastTimer;
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2800); }
+
+/* ============== RENDER HOME ============== */
+function artBox(img, badge, alt){
+  return `<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-gold/5">
+    ${badge?`<span class="absolute top-2 left-2 z-10 flex items-center gap-1 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full"><span class="w-1.5 h-1.5 bg-white rounded-full"></span>New</span>`:''}
+    <img src="${img}" alt="${alt||''}" loading="lazy" class="w-full h-full object-cover" />
+  </div>`;
+}
+function renderNewArrivals(){
+  document.getElementById('newArrivals').innerHTML = newArrivals.map(it=>`
+    <div class="min-w-[160px] sm:min-w-[200px] bg-white rounded-2xl shadow-softer hover-lift overflow-hidden">
+      ${artBox(it.img,true,it.n)}
+      <div class="p-3">
+        <div class="font-semibold text-sm truncate">${it.n}</div>
+        <div class="text-xs text-gold mt-0.5">${it.c}</div>
+      </div>
+    </div>`).join('');
+}
+function renderCategories(){
+  document.getElementById('categoryGrid').innerHTML = categories.map(c=>`
+    <button onclick="catClick('${c.go}')" class="text-left bg-white rounded-2xl shadow-softer hover-lift overflow-hidden">
+      ${artBox(c.img,false,c.n)}
+      <div class="p-4">
+        <div class="font-serif font-bold text-base sm:text-lg">${c.n}</div>
+        <div class="text-xs text-warmgray mt-1 hidden sm:block">${c.d}</div>
+        <div class="text-sm font-semibold text-gold mt-2">${c.r}</div>
+      </div>
+    </button>`).join('');
+}
+function catClick(g){
+  if(g==='handcasting') return go('handcasting');
+  if(g==='resin') return go('resin');
+  if(g.startsWith('generic:')){ const [,t,s,r]=g.split(':'); return goGeneric(t,s,r); }
+}
+
+/* ============== PRODUCT CARD ============== */
+function productCard(name, range, img, onclick){
+  return `<div class="bg-white rounded-2xl shadow-softer overflow-hidden flex flex-col">
+    ${artBox(img,false,name)}
+    <div class="p-3 flex flex-col flex-1">
+      <div class="font-semibold text-sm">${name}</div>
+      <div class="text-sm font-semibold text-gold mt-1">${range}</div>
+      <button onclick="${onclick}" class="mt-3 w-full py-2 rounded-lg border-2 border-gold text-gold text-sm font-semibold hover:bg-gold hover:text-white transition">Customize</button>
+    </div>
+  </div>`;
+}
+
+/* ============== HAND CASTING ============== */
+function hcTab(tab){
+  document.querySelectorAll('#hcTabs .hc-tab').forEach(b=>b.classList.toggle('sel', b.dataset.tab===tab));
+  const d = hcData[tab];
+  document.getElementById('hcProducts').innerHTML = d.items.map((it,i)=>`
+    <div class="bg-white rounded-2xl shadow-softer overflow-hidden">
+      ${artBox(d.imgs[i%d.imgs.length],false,it)}
+      <div class="p-3">
+        <div class="font-semibold text-sm">${it}</div>
+        <div class="text-sm font-semibold text-gold mt-1">${d.r}</div>
+      </div>
+    </div>`).join('');
+}
+
+/* ============== CALENDAR ============== */
+let calDate = new Date();
+let selectedDate = new Date();
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+function changeMonth(delta){ calDate.setMonth(calDate.getMonth()+delta); renderCalendar(); }
+function renderCalendar(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const y = calDate.getFullYear(), m = calDate.getMonth();
+  document.getElementById('calLabel').textContent = monthNames[m]+' '+y;
+  const first = new Date(y,m,1).getDay();
+  const days = new Date(y,m+1,0).getDate();
+  let html='';
+  for(let i=0;i<first;i++) html+='<div></div>';
+  for(let d=1;d<=days;d++){
+    const date = new Date(y,m,d);
+    const isPast = date < today;
+    const isWeekend = date.getDay()===0 || date.getDay()===6;
+    const isSel = date.toDateString()===selectedDate.toDateString();
+    let cls = 'h-9 rounded-lg text-sm flex items-center justify-center ';
+    if(isPast){ cls+='text-disabled cursor-not-allowed'; }
+    else if(isSel){ cls+='bg-gold text-white font-bold'; }
+    else if(isWeekend){ cls+='bg-gold/10 hover:bg-gold/20 cursor-pointer'; }
+    else { cls+='hover:bg-gold/15 cursor-pointer'; }
+    html += `<button ${isPast?'disabled':''} onclick="pickDate(${y},${m},${d})" class="${cls}">${d}</button>`;
+  }
+  document.getElementById('calGrid').innerHTML = html;
+  updateSlotLabel();
+}
+function pickDate(y,m,d){ selectedDate=new Date(y,m,d); renderCalendar(); renderSlots(); }
+function fmtDate(dt){ return dt.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
+function updateSlotLabel(){ document.getElementById('slotDateLabel').textContent = fmtDate(selectedDate); }
+
+/* ============== SLOTS ============== */
+const allSlots = ['10 AM – 12 PM','12 PM – 2 PM','2 PM – 4 PM','4 PM – 6 PM','6 PM – 8 PM'];
+let bookedSlots = [];
+function renderSlots(){
+  // deterministic-ish random: 2 booked per date
+  const seed = selectedDate.getDate() + selectedDate.getMonth()*31;
+  let idxs=[]; let s=seed;
+  while(idxs.length<2){ s=(s*9301+49297)%233280; const i=Math.floor(s/233280*5); if(!idxs.includes(i)) idxs.push(i); }
+  bookedSlots = idxs;
+  document.getElementById('slots').innerHTML = allSlots.map((slot,i)=>{
+    if(bookedSlots.includes(i)){
+      return `<button disabled class="px-4 py-2.5 rounded-xl text-sm bg-disabled text-warmgray line-through cursor-not-allowed">${slot}</button>`;
+    }
+    return `<button onclick="openBooking('${slot}')" class="px-4 py-2.5 rounded-xl text-sm border-2 border-gold text-gold bg-white font-semibold hover:bg-gold hover:text-white transition">${slot}</button>`;
+  }).join('');
+}
+
+/* ============== BOOKING MODAL ============== */
+const STUDIO_WA = '919662184977';   // +91 96621 84977
+const ADVANCE_AMOUNT = 500;
+let currentSlot = '';
+let currentBooking = null;
+
+function openBooking(slot){
+  currentSlot = slot;
+  document.getElementById('modalDate').textContent = fmtDate(selectedDate);
+  document.getElementById('modalSlot').textContent = slot;
+  document.getElementById('bookingModal').classList.add('show');
+}
+function closeBooking(){ document.getElementById('bookingModal').classList.remove('show'); document.getElementById('cityDropdown').classList.add('hidden'); }
+
+/* ---- Step 1: capture form, kick off payment ---- */
+function submitBooking(e){
+  e.preventDefault();
+  currentBooking = {
+    parentName: document.getElementById('bkName').value.trim(),
+    mobileNumber: document.getElementById('bkMobile').value.trim(),
+    kidAge: document.getElementById('bkAge').value.trim(),
+    city: document.getElementById('cityInput').value.trim(),
+    fullAddress: document.getElementById('bkAddress').value.trim(),
+    selectedDate: fmtDate(selectedDate),
+    selectedSlot: currentSlot,
+    amount: ADVANCE_AMOUNT,
+  };
+  closeBooking();
+  startPayment();
+}
+
+/* ---- Mock backend: simulates POST /api/create-order ---- */
+function mockCreateOrder(booking){
+  // Simulates a backend call to Cashfree Orders API that returns a payment_session_id.
+  return new Promise(resolve=>{
+    setTimeout(()=>{
+      const rand = Math.random().toString(36).slice(2,8).toUpperCase();
+      resolve({
+        orderId: 'ORD' + Date.now().toString().slice(-8),
+        paymentSessionId: 'session_' + rand + Math.random().toString(36).slice(2,10),
+        orderAmount: booking.amount,
+        orderCurrency: 'INR',
+      });
+    }, 900);
+  });
+}
+
+/* ---- Step 2: Cashfree sandbox checkout ---- */
+let currentOrder = null;
+async function startPayment(){
+  const modal = document.getElementById('payModal');
+  modal.classList.add('show');
+  document.getElementById('payConnecting').classList.remove('hidden');
+  document.getElementById('payCheckout').classList.add('hidden');
+  document.getElementById('payProcessing').classList.add('hidden');
+
+  currentOrder = await mockCreateOrder(currentBooking);
+
+  document.getElementById('payOrderId').textContent = currentOrder.orderId;
+  document.getElementById('paySession').textContent = currentOrder.paymentSessionId.slice(0,14) + '…';
+  document.getElementById('payCust').textContent = currentBooking.parentName || 'Guest';
+  document.getElementById('payConnecting').classList.add('hidden');
+  document.getElementById('payCheckout').classList.remove('hidden');
+}
+function closePay(){ document.getElementById('payModal').classList.remove('show'); }
+
+/* ---- Step 3: simulate successful charge ---- */
+function payNow(){
+  document.getElementById('payCheckout').classList.add('hidden');
+  document.getElementById('payProcessing').classList.remove('hidden');
+  setTimeout(()=>{
+    closePay();
+    onPaymentSuccess('PAY' + Math.random().toString(36).slice(2,10).toUpperCase());
+  }, 1600);
+}
+
+/* ---- Step 4: WhatsApp confirmation preview ---- */
+function buildBookingMessage(b, payId){
+  return [
+    '*New Booking — Shah Art Studio* 🎨',
+    '',
+    '*Service:* Hand Casting Appointment',
+    `*Parent Name:* ${b.parentName}`,
+    `*Mobile:* ${b.mobileNumber}`,
+    `*Kid's Age:* ${b.kidAge}`,
+    `*Date:* ${b.selectedDate}`,
+    `*Time Slot:* ${b.selectedSlot}`,
+    `*City:* ${b.city}`,
+    `*Address:* ${b.fullAddress}`,
+    '',
+    `*Advance Paid:* ₹${b.amount} ✅`,
+    `*Payment ID:* ${payId}`,
+    '',
+    'Please confirm my appointment. Thank you!',
+  ].join('\n');
+}
+let currentPayId = '';
+function onPaymentSuccess(payId){
+  currentPayId = payId;
+  currentBooking.paymentId = payId;
+  document.getElementById('waPayId').textContent = payId;
+  document.getElementById('waPreview').textContent = buildBookingMessage(currentBooking, payId);
+  document.getElementById('waModal').classList.add('show');
+}
+function closeWa(){ document.getElementById('waModal').classList.remove('show'); }
+
+/* ---- Step 5: open WhatsApp, then final success ---- */
+function sendToStudio(){
+  const msg = buildBookingMessage(currentBooking, currentPayId);
+  const url = `https://wa.me/${STUDIO_WA}?text=${encodeURIComponent(msg)}`;
+  // open in a new tab (works inside preview iframe too)
+  if(window.self !== window.top){ window.open(url, '_blank'); }
+  else { window.open(url, '_blank'); }
+  closeWa();
+  showSuccess();
+}
+function showSuccess(){
+  document.getElementById('successName').textContent = currentBooking.parentName || 'Guest';
+  document.getElementById('successSlot').textContent = `${currentBooking.selectedDate}, ${currentBooking.selectedSlot}`;
+  document.getElementById('successBookingId').textContent = currentOrder ? currentOrder.orderId : '—';
+  document.getElementById('successModal').classList.add('show');
+}
+function closeSuccess(){
+  document.getElementById('successModal').classList.remove('show');
+  document.getElementById('bookingForm').reset();
+  renderSlots();
+}
+
+/* ============== CITY DROPDOWN ============== */
+function filterCities(){
+  const q = document.getElementById('cityInput').value.toLowerCase();
+  const dd = document.getElementById('cityDropdown');
+  const list = modalCities.filter(c=>c.toLowerCase().includes(q));
+  dd.classList.remove('hidden');
+  dd.innerHTML = list.length ? list.map(c=>`<button type="button" onclick="pickCity('${c}')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gold/10">${c}</button>`).join('') : '<div class="px-4 py-2 text-sm text-warmgray">No city found</div>';
+}
+function pickCity(c){ document.getElementById('cityInput').value=c; document.getElementById('cityDropdown').classList.add('hidden'); }
+
+/* ============== RESIN ============== */
+function renderResin(){
+  document.getElementById('resinGrid').innerHTML = resinItems.map((it,i)=>productCard(it.n,'₹999 – ₹4,999',it.img,`openCustomize('${it.n}','resin','₹999 – ₹4,999')`)).join('');
+}
+
+/* ============== GENERIC RANGE ============== */
+let genericRange = '';
+
+/* ============== CUSTOMIZE MODAL ============== */
+let custMode='simple';
+function openCustomize(title, mode, range){
+  custMode = mode;
+  document.getElementById('custTitle').textContent = 'Customize · '+title;
+  document.getElementById('customizeModal').classList.add('show');
+  const opts = document.getElementById('custOptions');
+  const simple = document.getElementById('custSimpleText');
+  if(mode==='resin'){
+    opts.classList.remove('hidden'); simple.classList.add('hidden');
+    // reset selections
+    opts.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('sel'));
+    custState = {size:'Small',width:'Standard',writing:'No'};
+    // preselect defaults
+    opts.querySelectorAll('[data-group]').forEach(g=>{ g.querySelector('.opt-btn').classList.add('sel'); });
+    updateCustRange();
+  } else {
+    opts.classList.add('hidden'); simple.classList.remove('hidden');
+    document.getElementById('custRange').textContent = range;
+  }
+}
+function closeCustomize(){ document.getElementById('customizeModal').classList.remove('show'); }
+let custState = {size:'Small',width:'Standard',writing:'No'};
+function custPick(btn){
+  const group = btn.closest('[data-group]');
+  group.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  custState[group.dataset.group] = btn.dataset.val;
+  updateCustRange();
+}
+function updateCustRange(){
+  let lo=999, hi=1999;
+  if(custState.size==='Medium'){ lo=1999; hi=3499; }
+  if(custState.size==='Large'){ lo=3499; hi=4999; }
+  if(custState.width==='Wide'){ lo+=500; hi+=800; }
+  if(custState.writing==='Yes'){ lo+=300; hi+=500; }
+  document.getElementById('custRange').textContent = `₹${lo.toLocaleString('en-IN')} – ₹${hi.toLocaleString('en-IN')}`;
+}
+
+/* ============== COURSES ============== */
+function renderCourses(){
+  document.getElementById('coursesGrid').innerHTML = courses.map((c,i)=>`
+    <div class="bg-white rounded-2xl shadow-softer overflow-hidden flex flex-col">
+      ${artBox(c.img,false,c.n)}
+      <div class="p-4 flex flex-col flex-1">
+        <div class="flex items-center justify-between">
+          <div class="font-serif font-bold text-lg">${c.n}</div>
+          <span class="text-[11px] font-semibold bg-gold/15 text-golddark px-2 py-0.5 rounded-full">${c.dur}</span>
+        </div>
+        <div class="text-sm font-semibold text-gold mt-1">${c.r}</div>
+        <div class="mt-3 space-y-2">
+          <input type="text" placeholder="Your Name" class="form-input !mt-0" />
+          <input type="tel" placeholder="Mobile Number" class="form-input !mt-0" />
+        </div>
+        <button onclick="enroll(event,'${c.n}')" class="mt-3 w-full py-2.5 rounded-xl bg-gold text-white font-semibold hover:bg-golddark transition">Enroll Now</button>
+      </div>
+    </div>`).join('');
+}
+function enroll(e,name){ toast('Thanks! We will contact you about '+name); }
+
+/* ============== AVAILABILITY ============== */
+let selState='';
+function selCountry(c){
+  document.getElementById('countryIndia').classList.add('sel');
+  const grid = document.getElementById('stateGrid');
+  grid.innerHTML = Object.keys(statesData).map(s=>`<button onclick="selStateFn('${s}')" data-state="${s}" class="step-card">${s}</button>`).join('');
+  document.getElementById('stepState').classList.remove('hidden');
+}
+function selStateFn(s){
+  selState=s;
+  document.querySelectorAll('#stateGrid .step-card').forEach(b=>b.classList.toggle('sel',b.dataset.state===s));
+  const grid = document.getElementById('cityGrid');
+  grid.innerHTML = statesData[s].map(c=>`<button onclick="selCityFn('${c}')" data-city="${c}" class="step-card">${c}</button>`).join('');
+  document.getElementById('stepCity').classList.remove('hidden');
+  document.getElementById('stepConfirm').classList.add('hidden');
+}
+function selCityFn(c){
+  document.querySelectorAll('#cityGrid .step-card').forEach(b=>b.classList.toggle('sel',b.dataset.city===c));
+  document.getElementById('confirmPath').textContent = `India → ${selState} → ${c}`;
+  document.getElementById('stepConfirm').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('stepConfirm').scrollIntoView({behavior:'smooth'}),100);
+}
+
+/* ============== ESC KEY ============== */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    closeBooking(); closeCustomize(); closeSearch(); closeSidebar(); closeWa(); closeSuccess();
+  }
+});
+
+/* ============== INIT ============== */
+renderNewArrivals();
+renderCategories();
+renderResin();
+renderCourses();
+renderCalendar();
+renderSlots();
+renderSearch();
+</script>
+</body>
+</html>
