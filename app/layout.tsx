@@ -1,55 +1,29 @@
-import { Analytics } from '@vercel/analytics/next'
-import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
+import type { Metadata, Viewport } from "next"
+import { Fraunces, Nunito, Caveat } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import { SiteChrome } from "@/components/site/site-chrome"
+import { Footer } from "@/components/site/footer"
+import "./globals.css"
 
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
+const body = Nunito({ variable: "--font-body", subsets: ["latin"] })
+const display = Fraunces({ variable: "--font-display-ff", subsets: ["latin"], axes: ["SOFT", "WONK", "opsz"], style: ["normal", "italic"] })
+const hand = Caveat({ variable: "--font-hand", subsets: ["latin"], weight: ["500", "700"] })
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
+  title: { default: "Shah Art Studio & Academy — Preserve Precious Moments Forever", template: "%s · Shah Art Studio" },
+  description: "3D hand & foot casting for newborns, baby keepsakes, resin art and bespoke home decor. We come to you. Handcrafted with 100% skin-safe organic materials.",
+  icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
 }
+export const viewport: Viewport = { themeColor: "#FFF8F0" }
 
-export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
-}
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="font-sans antialiased">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+    <html lang="en" className={`${body.variable} ${display.variable} ${hand.variable}`}>
+      <body>
+        <SiteChrome />
+        <main>{children}</main>
+        <Footer />
+        {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>
   )
