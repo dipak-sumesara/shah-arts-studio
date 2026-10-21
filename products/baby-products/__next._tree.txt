@@ -1,0 +1,7 @@
+:HL["/shah-arts-studio/_next/static/chunks/0jrl8a~m~1fyk.css","style"]
+:HL["/shah-arts-studio/_next/static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/shah-arts-studio/_next/static/media/54fc36028e2bb174-s.p.0nkps02--w45i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/shah-arts-studio/_next/static/media/66b33cc02d8f8b9d-s.p.13ww7apd.vf8_.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/shah-arts-studio/_next/static/media/a85fe84266768609-s.p.05b418i5bs~lg.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/shah-arts-studio/img/baby-keepsake-sm.webp","image"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"products","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"baby-products","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"BljRyJh9ziaJMx14XB4sZ"}
